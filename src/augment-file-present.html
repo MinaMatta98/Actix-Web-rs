@@ -1,0 +1,52 @@
+<!-- <!DOCTYPE html> -->
+<!-- <head> -->
+<!-- 	<meta name="viewport" content="width=device-width, initial-scale=1" /> -->
+<!-- 	<title>Demo 1</title> -->
+<!-- 	<link rel="stylesheet" href="/src/bootstrap-5.2.3-dist/css/bootstrap.css" /> -->
+<!-- 	<script src="/src/bootstrap-5.2.3-dist/js/bootstrap.js"></script> -->
+<!-- </head> -->
+
+<body>
+	<section id="thumbnails" style="background-color: #212529; margin: -20px 0 0 0;"
+		class="position-fixed h-100 d-flex flex-column overflow-scroll hover-overlay text-align-center">
+	</section>
+
+	<h1 class="position-absolute w-75 start-50 translate-middle-x text-center p-5 mx-5">Advanced Search Made Simple</h1>
+	<div id="status" style="display: none;"
+		class="position-absolute w-75 start-50 translate-middle-x d-flex h-25 mx-5 my-3">
+	</div>
+	<div class="loading position-absolute start-50 bottom-50 my-5 translate-center-x mx-4" style="display: none;"
+		id="loading-animation"></div>
+	<form method='post' action='/submit' enctype='multipart/form-data'
+		style='justify-content: center; display: flex;  flex-direction: column'
+		class="position-absolute w-75 start-50 translate-middle-x bottom-50 h-25 mx-5" id="form">
+		<div style='justify-content: center; display: flex;'>
+			<label class='uploadLabel display-box' for='file-input' id='uploadLabel'> choose alternative file</label>
+			<input id='file-input' type='file' class='upload' name='file-input' accept='application/pdf' />
+		</div>
+		<br />
+		<div style='justify-content: center; display: flex;'>
+			<input type='remove' id='remove-button' value='remove' class='uploadLabel display-box removeBox' />
+		</div>
+		<div style='justify-content: center; display: flex;'>
+			<input type='view' id='view-button' value='view' class='uploadLabel display-box removeBox' />
+		</div>
+		<br />
+		<div style='justify-content: center; display: flex;'>
+			<input type='submit' id='submit-button' value='submit' disabled style='display: none' class="mb-3" />
+		</div>
+	</form>
+	</div>
+	<br />
+	<div>
+		<section id='showcase' class="w-75 position-absolute start-50 translate-middle-x top-50 h-auto mx-5">
+			<iframe id="iframe" src='/pdf/{id}' width='100%' height='100%' frameborder='0' allowfullscreen
+				class="po"></iframe>
+		</section>
+	</div>
+	<link rel='stylesheet' type='text/css' href='/static/drag-and-drop.css' />
+</body>
+<script src='/static/drag-and-drop.js'></script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+[package]
+name = "actix-implementation"
+version = "0.1.0"
+edition = "2021"
+build = "./src/build/build.rs"
+authors = ["Mina Matta <Mina.Matta@surroundaustralia.com>", "Peter.Philips@surroundaustralia.com"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4.3.1"
+scraper = "0.15.0"
+serde = { version = "1.0.158", features = ["serde_derive"] }
+serde_json = "1.0.94"
+rand = "0.8.5"
+# html_parser = "0.6.3"
+port-killer = "0.1.0"
+regex = "1.7.2"
+lazy_static = "1.4.0"
+walkdir = "2.3.3"
+image = "0.24.5"
+poppler = "0.3.2"
+cairo-rs = { version = "0.15.12", features = ["png", "pdf"] }
+glib = "0.17.3"
+spinners = "4.1.0"
+sysinfo = "0.28.1"
+reqwest = { version = "0.11.16", features = ["stream", "json", "futures-channel"] }
+tokio = { version = "1.26.0", features = ["rt", "sync", "fs", "rt-multi-thread", "num_cpus", "process", "io-util", "io-std"] }
+toml = "0.7.3"
+# value = "0.1.1"
+itertools = "0.10.5"
+thiserror = "1.0.40"
+anyhow = "1.0.70"
+futures = "0.3.27"
+actix-files = "0.6.2"
+actix-http = { version = "3.3.1", features = [] }
+mime_guess = "2.0.4"
+env_logger = "0.10.0"
+async-recursion = "1.0.4"
+async-weighted-semaphore = "0.2.1"
+actix-multipart = "0.6.0"
+futures-util = "0.3.27"
+# async-stream = "0.3.4"
+log = "0.4.17"
+use = "0.0.0"
+actix-web-actors = "4.2.0"
+actix = "0.13.0"
+
+[build-dependencies]
+pkg-config = "0.3.26"
+zip = "0.6.4"
+git2 = { version = "0.16.1", features = ["vendored-libgit2"] }
+sysinfo = "0.28.1"
+reqwest = "0.11.14"
+tokio = "1.26.0"
+decompress = "0.1.0"

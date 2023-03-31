@@ -1,0 +1,28 @@
+image: rustlang/rust:nightly
+pipelines:
+  branches:
+    master:
+       - stage:
+          steps:
+           - step:
+               name: "Building Environment"
+               caches:
+                - cargo
+                - rust-target
+               script:
+               - apt-get update
+               - apt-get install -y g++ autoconf
+                 libnss3-dev make build-essential cmake libcairo2-dev libjpeg-dev libpng-dev
+                 libtiff-dev libfontconfig1-dev pkg-config libglib2.0-dev libnss3 libgif-dev
+                 libblkid-dev e2fslibs-dev libboost-all-dev libaudit-dev clang-11 python3-pip
+                 python3-dev libssl-dev libffi-dev libtool zlib1g zlib1g-dev libserd-0-0 
+                 libserd-dev
+               - pip3 install --upgrade pip
+               - cargo build --release -v
+               - cargo fmt --all -v
+               - cargo clippy --all -- -W clippy::all
+          trigger: automatic
+definitions:
+  caches:
+    cargo: /usr/local/cargo # CARGO_HOME
+    rust-target: $BITBUCKET_CLONE_DIR/target

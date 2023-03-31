@@ -1,0 +1,55 @@
+<section id="drag-drop-section">
+  <div id="drop-area">
+    <div class="progress-container">
+      <div id="progress-bar" class="progress-bar">
+        <span class="progress-value"></span>
+      </div>
+    </div>
+    <div id="result" style="display: none">
+      <p style="display: none">File Uploaded Successfully</p>
+      <i class="fas fa-check-circle text-success" style="display: none"></i>
+      <p style="display: none">File Too Large</p>
+      <i class="fa-solid fa-circle-xmark" style="color: red; display: none"></i>
+      <p style="display: none">File Encoding Invalid</p>
+      <i class="fa-solid fa-circle-xmark" style="color: red; display: none"></i>
+      <p style="display: none">File Successfully Removed</p>
+      <i
+        class="fa-solid fa-check-circle"
+        style="color: green; display: none"
+      ></i>
+    </div>
+    <i class="fa-solid fa-file-import"></i>
+    <div id="upload-instructions">
+      <form method="post" action="/submit" enctype="multipart/form-data" accept-charset="utf-8">
+        <h2>Drag and drop files here</h2>
+        <h2>OR</h2>
+        <div>
+          <label
+            class="uploadLabel display-box"
+            for="file-input"
+            id="uploadLabel"
+          >
+            Choose File</label
+          >
+          <input
+            id="file-input"
+            type="file"
+            class="upload"
+            name="file-input"
+            accept="application/pdf"
+          />
+        </div>
+        <br />
+        <div>
+          <input
+            type="submit"
+            id="submit-button"
+            value="Submit"
+            disabled
+            style="display: none"
+          />
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
