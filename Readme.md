@@ -1,6 +1,6 @@
 # Readme
 
-This is a web server built with the Rocket web framework for Rust. It serves HTML files with an included navbar, as well as other types of files such as PDFs and images. It also includes routes for handling file deletion and redirecting to a "permission denied" page.
+This is a web server built with the Actix Web Framework for Rust. It serves HTML files with an included navbar, as well as other types of files such as PDFs and images. It also includes routes for handling file deletion and redirecting to a "permission denied" page.
 
 You can run the server with the command:
 
