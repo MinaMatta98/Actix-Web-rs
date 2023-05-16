@@ -27,6 +27,6 @@ This project delivers and utilizes the following RUST frameworks and libraries:
 * [Tokio-RS](https://tokio.rs/)
 * [Futures-rs](https://docs.rs/futures/)
 
-In doing so, the project demonstrates implementing a back-end system with a schedular that can process two requests at a time and push remaining requests to the end of the que.
+In doing so, the project demonstrates implementing a back-end system with a schedular that can process two specialized requests at a time and push remaining requests to the end of the que. **Note that thousands of GET and POST requests can be processed per second**
 
 This is achieved via tokio-runtimes, non-blocking semaphores and yielding back to the executor.
