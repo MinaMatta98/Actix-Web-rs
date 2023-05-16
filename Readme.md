@@ -21,21 +21,12 @@ libboost-all-dev libaudit-dev libpoppler-dev libpoppler-glib8
 N.B: If you run a non Debian based distribution, you will need to swap `apt` out with your package manager, and also need to change the packages to match the package name of your distribution. For example, if you use Arch Linux, this would be `pacman` and `libpoppler-dev` would instead be called `poppler`.
 
 # Features
+This project delivers and utilizes the following RUST frameworks and libraries:
 
-| Endpoint | Functionality                                             
-|----------|-----------------------------------------------------------
-|/submit   | This endpoint transforms PDF documents to RDF via the sematic extractor of documents. The PDF's are mapped to a time since Unix EPOCH, and associated thumbnails are created via [libcairo](https://github.com/lambdaclass/cairo-rs), and stored to /upload/thumbnails/URI.png.
-|/sparql   | This endpoint is responsible for sparql: `curl -X POST -H 'Accept: application/sparql-results+json' -H 'Content-Type: application/sparql-query' --data ' SELECT * FROM <https://company-name.com/graph/1678551283> WHERE  { ?s ?p ?o } LIMIT 2' "http://localhost:8000/sparql"`. Where a general query is required for testing, simply remove FROM <graph>.
-|/sparql?absorb | This endpoint allows for the absorbtion of files into a graph, and will also allow for persistance accross application startup. An example post request is as follows: `curl -f -X POST -H 'Content-Type:text/turtle' -T test_data-0.ttl "http://127.0.0.1:8000/sparql?absorb"`
-|/view | This endpoint is responsible for graph compression via [HDT-CPP](https://github.com/rdfhdt/hdt-cpp) and allows for the structure to be parsed via [RickView](https://github.com/KonradHoeffner/rickview)
-|/remove | This endpoint is responsible for removing pdf files from the memory cache as well as the server. Thumbnails, docx files and graphs are all removed for the given URI. This is intended to be used via webform and not via CURL, although that too is possible.
+* [Actix-web](https://actix.rs/)
+* [Tokio-RS](https://tokio.rs/)
+* [Futures-rs](https://docs.rs/futures/)
 
-**Note that due to cacheing functionality that has been introduced, changes to client-side HTML, CSS and JS files will only be reflected after restarting the server.**
+In doing so, the project demonstrates implementing a back-end system with a schedular that can process two requests at a time and push remaining requests to the end of the que.
 
-## PDF server-side absorption ![PDF server-side absorption](./Showcase/pdf.jpg)
-## PDF preview and thumbnailing ![PDF preview](./Showcase/augment.jpg)
-## PDF conversion to docx => RDF ![PDF conversion](./Showcase/RickView.jpg)
-## Graph Node Linkage ![PDF conversion](./Showcase/Graph.jpg)
-## SPARQL Endpoint Querying via CURL ![PDF conversion](./Showcase/query.jpg)
-## SPARQL Endpoint querying via front-end ![Query](./Showcase/sparql.jpg)
-## SPARQL Endpoint Absorption ![PDF conversion](./Showcase/absorb.jpg)
+This is achieved via tokio-runtimes, non-blocking semaphores and yielding back to the executor.

@@ -8,21 +8,16 @@
 use crate::models::{
     ConfigSchema, FileData, Index, ListJson, RickViewConfig, ThumbnailCacheInner, SEMAPHORE,
 };
+use actix::prelude::*;
 use actix_http::header::{HeaderMap, HeaderValue};
 use actix_http::StatusCode;
 use actix_multipart::form::tempfile::TempFileConfig;
-// use async_weighted_semaphore::AcquireFutureArc;
 use actix_web::web::{self, Redirect};
 use actix_web::{get, post, App, HttpRequest, HttpResponse, HttpServer, Responder, Result};
+use actix_web_actors::ws;
 use log::{error, info, warn};
 use reqwest::Client;
 use std::io::{Error, ErrorKind};
-// use futures_util::{StreamExt, S}
-// use futures::stream::{once, StreamExt};
-// use futures::{StreamExt, Stream, stream::};
-// use acti_web_actors::ws;
-use actix::prelude::*;
-use actix_web_actors::ws;
 
 pub mod models;
 use models::{HttpError, RDFSchemaUpper, ThumbnailCache, PROCESS_QUEUE, THUMBNAIL_CACHE};
@@ -32,48 +27,6 @@ struct ConversionActor;
 impl Actor for ConversionActor {
     type Context = ws::WebsocketContext<Self>;
 }
-
-// async fn qued_pdf_to_docx(
-//     pdf_path: String,
-//     docx_path: String,
-//     semaphore: async_weighted_semaphore::SemaphoreGuardArc,
-//     // actor: &mut ConversionActor
-//     // tx: std::sync::mpsc::Sender<bool>,
-// ) -> std::result::Result<(), std::io::Error> {
-//     info!("pdf path :{pdf_path}\t docx path: {docx_path}");
-//     let mut child = std::process::Command::new("python")
-//         .arg("./pdf2docx/use.py")
-//         .arg(&pdf_path)
-//         .arg(&docx_path)
-//         .stdout(std::process::Stdio::piped())
-//         .spawn()?;
-
-//     let exit_status = child.wait().unwrap();
-
-//     if !exit_status.success() {
-//         error!("Error occured at pdf_to_docx conversion: {exit_status}");
-
-//         remove_file(&[&pdf_path]);
-
-//         // tx.send(false).unwrap();
-//         drop(semaphore);
-
-//         Ok(())
-//     } else {
-//         let mut headers = HeaderMap::new();
-
-//         headers.insert(
-//             actix_http::header::CONTENT_TYPE,
-//             HeaderValue::from_str("text/turtle").unwrap(),
-//         );
-
-//         // tx.send(true).unwrap();
-
-//         drop(semaphore);
-
-//         Ok(())
-//     }
-// }
 
 impl StreamHandler<Result<ws::Message, ws::ProtocolError>> for ConversionActor {
     fn handle(&mut self, msg: Result<ws::Message, ws::ProtocolError>, ctx: &mut Self::Context) {
@@ -189,10 +142,7 @@ async fn upload_list() -> Result<impl Responder, HttpError> {
 }
 
 #[get("/thumbnails/{id}")]
-async fn thumbnails(
-    req: HttpRequest,
-    path: web::Path<String>,
-) -> impl Responder {
+async fn thumbnails(req: HttpRequest, path: web::Path<String>) -> impl Responder {
     use actix_web::http::header::ContentType;
     let response_body = THUMBNAIL_CACHE.get().unwrap().read().await;
 
@@ -814,6 +764,7 @@ async fn start_graph_db() -> std::result::Result<(), std::io::Error> {
     }
 }
 
+#[cfg(feature = "ssr")]
 async fn pdf_to_docx(
     paths: FileData,
     dataset_path: String,
@@ -908,7 +859,9 @@ async fn main() -> std::io::Result<()> {
 
     env_logger::init_from_env(env_logger::Env::new().default_filter_or("debug"));
 
+    let conf = leptos::get_configuration(Some("Cargo.toml")).await.unwrap();
     HttpServer::new(move || {
+        let leptos_options = &conf.leptos_options;
         App::new()
             .app_data(TempFileConfig::default().directory("./upload"))
             .app_data(
