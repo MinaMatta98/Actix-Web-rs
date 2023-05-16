@@ -23,6 +23,7 @@ pdf2docx/
 poppler*/
 hdt-cpp/
 hdt-cpp/*
+static/*
 
 
 # server/
